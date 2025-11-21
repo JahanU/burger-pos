@@ -1,13 +1,23 @@
 import { useCart } from '../../context/CartContext';
-import { Minus, Plus, Trash2, ShoppingBag } from 'lucide-react';
+import { Minus, Plus, Trash2, ShoppingBag, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-export function CartSidebar() {
+
+
+export function CartSidebar({ onClose }) {
     const { cartItems, updateQuantity, removeFromCart, cartTotal, clearCart } = useCart();
 
     if (cartItems.length === 0) {
         return (
-            <div className="h-full flex flex-col items-center justify-center p-8 text-gray-400 bg-white border-l border-gray-100">
+            <div className="h-full flex flex-col items-center justify-center p-8 text-gray-400 bg-white border-l border-gray-100 relative">
+                {/* Mobile Close Button */}
+                <button
+                    onClick={onClose}
+                    className="absolute top-4 right-4 p-2 bg-gray-100 rounded-full lg:hidden text-gray-500 hover:bg-gray-200"
+                >
+                    <X size={20} />
+                </button>
+
                 <div className="w-24 h-24 bg-gray-50 rounded-full flex items-center justify-center mb-6">
                     <ShoppingBag size={48} className="opacity-20" />
                 </div>
@@ -19,8 +29,14 @@ export function CartSidebar() {
 
     return (
         <div className="h-full flex flex-col bg-white border-l border-gray-100">
-            <div className="p-6 border-b border-gray-100">
+            <div className="p-6 border-b border-gray-100 flex justify-between items-center">
                 <h2 className="text-2xl font-bold text-gray-900">Current Order</h2>
+                <button
+                    onClick={onClose}
+                    className="p-2 bg-gray-100 rounded-full lg:hidden text-gray-500 hover:bg-gray-200"
+                >
+                    <X size={20} />
+                </button>
             </div>
 
             <div className="flex-1 overflow-y-auto p-6 space-y-6">
